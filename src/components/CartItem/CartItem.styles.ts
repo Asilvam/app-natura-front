@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   font-family: Arial, Helvetica, sans-serif;
   border-bottom: 1px solid lightblue;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   div {
     flex: 1;
   }
@@ -15,8 +15,8 @@ export const Wrapper = styled.div`
     justify-content: space-between;
   }
   img {
-    max-width: 80px;
-    object-fit: cover;
+    max-width: 100px;
+    object-fit: scale-down;
     margin-left: 40px;
   }
 `;

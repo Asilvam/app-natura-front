@@ -1,7 +1,7 @@
 import {Navigate, Route, Routes} from 'react-router-dom'
 import PrimarySearchAppBar from '../components/Navbar/NavBar';
 import {LoginPage} from '../components/Login/LoginPage';
-import {ProductPage} from "../components/Product/ProductPage";
+import ProductPage from "../components/Product/ProductPage";
 
 export const AppRouter = () => {
     return (

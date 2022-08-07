@@ -1,15 +1,21 @@
-import {useState} from "react";
+import { useState} from "react";
 import {useQuery} from 'react-query';
 
 import {Drawer} from "@mui/material";
 import {LinearProgress} from "@mui/material";
 import {Grid} from "@mui/material";
-import {AddShoppingCart} from "@mui/icons-material";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from "@mui/material/Badge";
 
 import {StyledButton, Wrapper} from "./ProductPage.styles";
 import Item from "../Item/Item";
 import Cart from "../Cart/Cart";
+
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import Stack from '@mui/material/Stack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export type CartItemType = {
     _id: string;
@@ -22,16 +28,18 @@ export type CartItemType = {
     amount: number;
 }
 
-const getProducts = async (req: Request, page = 1) => (
-    await (await fetch("https://app-natura-backend.herokuapp.com/api/products?limit=30&page=" + page)).json())
+const getProducts = async (limit, page) => {
+    const resp = await fetch(`https://app-natura-backend.herokuapp.com/api/products?limit=${limit}&page=${page}`);
+    return await (resp).json();
+}
 
-export const ProductPage = () => {
 
+const ProductPage = () => {
     const [cartOpen, setCartOpen] = useState(false);
     const [cartItems, setCartItems] = useState([] as CartItemType[]);
-    // const [limit, setLimit] = useState(25);
-    // const [page, setPage] = useState(1);
-    const {data, isLoading, error, isError} = useQuery(['products'], getProducts);
+    const [limit, setLimit] = useState(24);
+    const [page, setPage] = useState(1);
+    const {data, isLoading, error, isError} = useQuery(['products'], () => getProducts(limit, page));
     console.log('data---> ', data);
     console.log('isLoading---> ', isLoading);
     console.log('isError---> ', isError);
@@ -57,7 +65,7 @@ export const ProductPage = () => {
         })
     };
 
-    const handleRemoveFromCart = (id:string) => {
+    const handleRemoveFromCart = (id: string) => {
         setCartItems(prev =>
             prev.reduce((ack, item) => {
                 if (item._id === id) {
@@ -83,7 +91,7 @@ export const ProductPage = () => {
             </Drawer>
             <StyledButton onClick={() => setCartOpen(true)}>
                 <Badge badgeContent={getTotalItems(cartItems)} color={'error'}>
-                    <AddShoppingCart/>
+                    <ShoppingCartIcon fontSize="large"/>
                 </Badge>
             </StyledButton>
             <Grid container spacing={3}>
@@ -93,6 +101,19 @@ export const ProductPage = () => {
                     </Grid>
                 ))}
             </Grid>
+            <Stack spacing={4}>
+                <Pagination
+                    count={data?.totalPages}
+                    renderItem={(item) => (
+                        <PaginationItem
+                            components={{previous: ArrowBackIcon, next: ArrowForwardIcon}}
+                            {...item}
+                        />
+                    )}
+                />
+            </Stack>
         </Wrapper>
     )
-}
+};
+
+export default ProductPage;

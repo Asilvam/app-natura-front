@@ -1,4 +1,6 @@
 import {Button} from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 // Types
 import { CartItemType } from '../Product/ProductPage';
 // Styles
@@ -14,7 +16,7 @@ type Props = {
 const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => (
     <Wrapper>
         <div>
-            <h3>{item.title}</h3>
+            <h4>{item.title}</h4>
             <div className='information'>
                 <p>Price: ${item.price}</p>
                 <p>Total: ${(item.amount * item.price).toFixed(2)}</p>
@@ -26,7 +28,7 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => (
                     variant='contained'
                     onClick={() => removeFromCart(item._id)}
                 >
-                    -
+                    <RemoveCircleOutlineIcon/>
                 </Button>
                 <p>{item.amount}</p>
                 <Button
@@ -35,7 +37,7 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => (
                     variant='contained'
                     onClick={() => addToCart(item)}
                 >
-                    +
+                    <AddCircleOutlineIcon/>
                 </Button>
             </div>
         </div>
