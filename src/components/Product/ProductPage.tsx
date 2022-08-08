@@ -1,4 +1,4 @@
-import { useState} from "react";
+import {useState} from "react";
 import {useQuery} from 'react-query';
 
 import {Drawer} from "@mui/material";
@@ -11,11 +11,7 @@ import {StyledButton, Wrapper} from "./ProductPage.styles";
 import Item from "../Item/Item";
 import Cart from "../Cart/Cart";
 
-import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import Stack from '@mui/material/Stack';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ProductPagination from "../ProductPagination/ProductPagination";
 
 export type CartItemType = {
     _id: string;
@@ -32,7 +28,6 @@ const getProducts = async (limit, page) => {
     const resp = await fetch(`https://app-natura-backend.herokuapp.com/api/products?limit=${limit}&page=${page}`);
     return await (resp).json();
 }
-
 
 const ProductPage = () => {
     const [cartOpen, setCartOpen] = useState(false);
@@ -101,17 +96,9 @@ const ProductPage = () => {
                     </Grid>
                 ))}
             </Grid>
-            <Stack spacing={4}>
-                <Pagination
-                    count={data?.totalPages}
-                    renderItem={(item) => (
-                        <PaginationItem
-                            components={{previous: ArrowBackIcon, next: ArrowForwardIcon}}
-                            {...item}
-                        />
-                    )}
-                />
-            </Stack>
+            <ProductPagination
+                totalPages={data?.totalPages}
+            />
         </Wrapper>
     )
 };

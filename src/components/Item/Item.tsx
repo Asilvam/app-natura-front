@@ -1,8 +1,8 @@
 import {Button} from "@mui/material";
 // Types
-import { CartItemType } from '../Product/ProductPage';
+import {CartItemType} from '../Product/ProductPage';
 // Styles
-import { Wrapper } from './Item.styles';
+import {Wrapper} from './Item.styles';
 import React from "react";
 
 type Props = {
@@ -10,9 +10,9 @@ type Props = {
     handleAddToCart: (clickedItem: CartItemType) => void;
 };
 
-const Item: React.FC<Props> = ({ item, handleAddToCart }) => (
+const Item: React.FC<Props> = ({item, handleAddToCart}) => (
     <Wrapper>
-        <img src={item.path} alt={item.title} />
+        <img src={item.path} alt={item.title}/>
         <div>
             <h3>{item.title}</h3>
             <p>{item.description}</p>
